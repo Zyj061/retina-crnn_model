@@ -8,7 +8,7 @@ import scipy.io as scio
 from scipy.sparse import *
 from keras import backend as K
 from keras.models import model_from_json
-from custom_activation import ParametricSoftplus, STD, STF, lateral_layer
+from custom_activation import ParametricSoftplus, lateral_layer
 from data_generator import *
 import h5py
 from visualizations import *
