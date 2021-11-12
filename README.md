@@ -17,6 +17,18 @@ python train_off_cnn 6
 ```
 python test_models.py --stim movie2 --model crnn_lstm
 ```
+You can also uncomment the following codes in the `test_models.py` to train the encoding model on movie2.
+
+```
+'''
+# training model
+model = train_model(stim)
+
+# saving the learned model 
+make_path(output_path)
+save_model(model, output_path) 
+'''
+```
 
 `models.py` and `models_off.py` are codes of the models we have mentioned in the paper. 
 
