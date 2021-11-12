@@ -4,7 +4,7 @@ This repository is code of the paper **Unravelling neural coding of dynamic natu
 
 `train_off_cnn.py`is script for training CNN model for generated data. You can change the codes to train CRNN models as following:
 
-![1636689559056](C:\Users\dell\AppData\Local\Temp\1636689559056.png)
+![train_off_cnn.py](https://github.com/Zyj061/retina-crnn_model/blob/master/off_model.png)
 
 Run the following python script to train and obtain testing results (corresponding to the experiments shown in Fig.2 of our paper):
 
@@ -30,3 +30,6 @@ python test_models.py --stim movie2 --model crnn_lstm
 
 Please cite our work "[Unraveling neural coding of dynamic natural visual scenes via convolutional recurrent neural networks](https://www.sciencedirect.com/science/article/pii/S2666389921002051)" when referencing this repository.
 
+# License
+
+The provided implementation is strictly for academic purposes only. Shold you be interested in using our technology for any commercial use, please feel free to contact us.
