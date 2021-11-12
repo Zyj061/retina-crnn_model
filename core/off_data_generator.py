@@ -5,7 +5,7 @@ import numpy as np
 from collections import namedtuple
 from scipy.ndimage.filters import gaussian_filter1d
 
-data_prefix = '/home/datasets/yajing/retina_data'
+data_prefix = './data'
 
 filename = 'cell_simpleNL_off_2GC_v3.mat'
 

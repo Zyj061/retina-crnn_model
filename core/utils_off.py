@@ -640,7 +640,6 @@ def test_model(output_path, history):
         model.load_weights(filename)
         model.summary()
 
-        #val_data = load_data(stim_name, 'test', history)
         val_data = load_data('test', history)
 
         # visualize the firing rate of model comparing to data 

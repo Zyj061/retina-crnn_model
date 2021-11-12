@@ -5,7 +5,7 @@ import scipy.io as scio
 import numpy as np
 
 from keras import backend as K
-from model_off import cnn_model
+from model_off import cnn_model, crnn_model
 from off_data_generator import load_data, ImageGenerator 
 from keras.callbacks import EarlyStopping, TensorBoard, ModelCheckpoint
 from keras.optimizers import Adam
@@ -15,7 +15,7 @@ from custom_activation import ParametricSoftplus
 from scipy.stats import pearsonr
 #from metrics import allmetrics, cc
 
-data_prefix = 'path_to_data'
+data_prefix = './data/'
 
 bc_size = int(sys.argv[1])
 
@@ -24,8 +24,13 @@ def cc_nips(r, rhat):
     return pearsonr(r, rhat)[0]
 
 def train_model():
-
+	
+	# cnn model 
     model = cnn_model(bc_size=bc_size, l1_Wreg=0)
+	
+	# crnn model with 8 lstm units
+	#model = crnn_model(num_hidden=8, bc_size=bc_size, l1_Wreg=0) 
+	
     log_path = './off_cnn_bc' + str(bc_size) + '_log'
     BATCHSIZE = 4096
     VAL_BATCHSIZE = 2048
@@ -53,11 +58,11 @@ def train_model():
 
     return model
 
-data_prefix = '/path_to_data'
+data_prefix = './data/'
 stim = 2
 print('training on simulated off data')
 
-output_path = os.path.join(data_prefix, 'output', 'off', 'cnn_bc' + str(bc_size))
+output_path = os.path.join('./results', 'off', 'cnn_bc' + str(bc_size))
 
 # training model
 model = train_model()
@@ -68,19 +73,3 @@ save_model(model, output_path)
 
 test_model(output_path, 20)
 
-
-'''
-def validate(model, data):
-    
-    val_data = load_data(stim_type[stim], 'test')
-
-    X = val_data.X
-    y = val_data.r
-
-    y_pred = model.predict_on_batch(X)
-
-    metrics = ('cc', )
-    avg_val, all_val = allmetrics(y, y_pred, metrics)
-
-    return avg_val, all_val
-'''

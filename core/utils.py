@@ -8,7 +8,7 @@ import scipy.io as scio
 from scipy.sparse import *
 from keras import backend as K
 from keras.models import model_from_json
-from custom_activation import ParametricSoftplus, lateral_layer
+from custom_activation import ParametricSoftplus, STD, STF, lateral_layer
 from data_generator import *
 import h5py
 from visualizations import *
@@ -614,7 +614,7 @@ def draw_train_STA(model, data, output_path, nt):
         plt.close()
 
 # visulizing the response of model comparing to data 
-def test_model(output_path, stim_name, history, batch_size=None, prune=False, train_1k=False, cell_num=80, display=True):
+def test_model(output_path, stim_name, history, batch_size=None, prune=False, train_1k=False, cell_num=80, display=True, result_dir=None):
 
         #print('Testing prune model..')
         if prune is True:
@@ -638,6 +638,11 @@ def test_model(output_path, stim_name, history, batch_size=None, prune=False, tr
         model.load_weights(filename)
         print(model.summary())
 
+		model_name = output_path.split('/')[3]
+		record_path = os.path.join(result_dir, model_name)
+		if not os.path.exists(record_path):
+			os.makedirs(record_path)		
+
         #val_data = load_data(stim_name, 'test', history)
 
         if train_1k is True:
@@ -647,14 +652,13 @@ def test_model(output_path, stim_name, history, batch_size=None, prune=False, tr
 
         # visualize the firing rate of model comparing to data 
 
-        '''
         if batch_size is None:
             cc_res, cc_avg, cc_std = vis_fr(model, val_data, record_path, display=display) 
         else:
             cc_res, cc_avg, cc_std = vis_fr(model, val_data, record_path, display=False, batch_size=batch_size)
-        '''
 
-        '''
+
+
         weights = h5py.File(filename, 'r')
         conv1_layer = model.get_layer(name='conv1')
         conv1 = conv1_layer.get_weights()
@@ -675,31 +679,9 @@ def test_model(output_path, stim_name, history, batch_size=None, prune=False, tr
         figpath = os.path.join(record_path, 'conv2_kernel.png')
         fig.savefig(figpath)
         plt.close(fig)
-        '''
-        
-        '''
-        nonlinear = get_kernel(weights, 'parametric_softplus_1')
-        nonlinear_a = nonlinear['Variable:0']
-        nonlinear_b = nonlinear['Variable_1:0']
 
-        #plot RGC nonlinearity
-        plot_nonlinear(output_path, nonlinear_a, nonlinear_b)
-        '''
-
-        '''
-        conv1_sta = get_sta(model, 1)
-        sta_filepath = os.path.join(output_path, 'conv1_sta.npy')
-        np.save(sta_filepath, conv1_sta)
-        visualize_sta(conv1_sta, output_path, 'conv1_sta')
-
-        # for crnn model , the second convolutional layer is on the fifth
-        conv2_sta = get_sta(model, 5)
-        sta_filepath = os.path.join(output_path, 'conv2_sta.npy')
-        np.save(sta_filepath, conv2_sta)
-
-        visualize_sta(conv2_sta, output_path, 'conv2_sta')
-        '''
-
+       
+		# compute the receptive field of the RGCs
         if train_1k is True:
             #dense_sta = get_denseSta(model, cell_num=cell_num)
             dense_sta = get_denseSta(model, samples=40000, cell_num=cell_num)
