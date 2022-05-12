@@ -18,6 +18,7 @@ import argparse
 os.environ['CUDA_VISIBLE_DEVICES'] = '10'
 
 parser = argparse.ArgumentParser(description='retinal models for dynamic natural scenes')
+parser.add_argument('--stim', type=str, default='movie2', help='visual stimuli')
 parser.add_argument('--model', type=str, default='crnn_lstm', help='encoding model')
 parser.add_argument('--save_result', type=bool, default=True, help='save the test results or not')
 parser.add_argument('--result_dir', type=str, default='results/', help='path of results')
