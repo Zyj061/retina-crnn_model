@@ -42,6 +42,18 @@ save_model(model, output_path)
 
 Please cite our work "[Unraveling neural coding of dynamic natural visual scenes via convolutional recurrent neural networks](https://www.sciencedirect.com/science/article/pii/S2666389921002051)" when referencing this repository.
 
+```
+@article{zheng2021unraveling,
+  title={Unraveling neural coding of dynamic natural visual scenes via convolutional recurrent neural networks},
+  author={Zheng, Yajing and Jia, Shanshan and Yu, Zhaofei and Liu, Jian K and Huang, Tiejun},
+  journal={Patterns},
+  volume={2},
+  number={10},
+  year={2021},
+  publisher={Elsevier}
+}
+```
+
 # License
 
 The provided implementation is strictly for academic purposes only. Shold you be interested in using our technology for any commercial use, please feel free to contact us.
